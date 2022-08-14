@@ -439,6 +439,95 @@ $if(logo)$
 $endif$
 $endif$
 
+\begin{center}
+\textit{Approved by: $approval$} \par
+$if(date_approval)$ \textit{Approved date:  $date_approval$} \par $endif$
+$if(date_entry)$ \textit{Entry into force:  $date_entry$} \par $endif$
+\end{center}
+}
+
+\providecommand{\makeresponsibilities}[0]{
+\hypertarget{responsibilities}{
+\section{Responsibilities}\label{responsibilities}}
+
+\begin{itemize}
+\tightlist
+$for(responsible)$
+\item{$responsible.name$ is the $responsible.title$ with overall responsibility for $responsible.responsibility$}
+$endfor$
+\end{itemize}
+
+$if(reviewfreq)$
+\par We will review this policy: $reviewfreq$
+$endif$
+
+$if(contact)$
+\par In the meantime, if you have any questions, suggestions or feedback, please contact: $contact$
+$endif$
+}
+
+\providecommand{\makedisiplinary}[0]{
+\hypertarget{disiplinary-action}{%
+\section{Disiplinary Action}\label{disiplinary-action}}
+Employees who don't adhere to the present policy will face disciplinary action up to and including termination. \par
+
+$if(reasonwarning)$
+Example reasons for warning are:
+
+\begin{itemize}
+$for(reasonwarning)$
+\item $reasonwarning$
+$endfor$
+\end{itemize}
+$endif$
+
+$if(reasonterminiation)$
+Example reasons for termination are:
+
+\begin{itemize}
+\tightlist
+$for(reasonterminiation)$
+\item $reasonterminiation$
+$endfor$
+\end{itemize}
+$endif$
+}
+
+\newcommand{\nametitlesigdate}[3][5cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \par \small \textit{#3} \\[2\normalbaselineskip]
+
+    \hrule \par {\small \textit{Date and Location}} \\[2\normalbaselineskip]
+
+    \hrule \par {\small \textit{Signature}} \\[0pt]
+
+  \end{tabular}
+}
+
+\newcommand{\namesigdate}[2][5cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+    #2 \\[2\normalbaselineskip]
+
+    \hrule \par {\small \textit{Date and Location}} \\[2\normalbaselineskip]
+
+    \hrule \par {\small \textit{Signature}} \\[0pt]
+
+  \end{tabular}
+}
+
+\newcommand{\sigdate}[1][5cm]{%
+  \begin{tabular}{@{}p{#1}@{}}
+
+    \hrule \par {\small \textit{Date and Location}} \\[2\normalbaselineskip]
+
+    \hrule \par {\small \textit{Signature}} \\[0pt]
+
+  \end{tabular}
+}
+
+% ------------------------------
+% START OF DOCUMENT CONSTRUCTION
+% ------------------------------
 \begin{document}
 $if(has-frontmatter)$
 \frontmatter
@@ -449,6 +538,11 @@ $if(beamer)$
 $else$
 \maketitle
 $endif$
+
+$if(approval)$
+\makeapproval
+$endif$
+
 $if(abstract)$
 \begin{abstract}
 $abstract$
@@ -458,8 +552,8 @@ $endif$
 
 $for(include-before)$
 $include-before$
-
 $endfor$
+
 $if(toc)$
 $if(toc-title)$
 \renewcommand*\contentsname{$toc-title$}
@@ -481,23 +575,63 @@ $endif$
 }
 $endif$
 $endif$
+
 $if(lof)$
 \listoffigures
 $endif$
+
 $if(lot)$
 \listoftables
 $endif$
+
 $if(linestretch)$
 \setstretch{$linestretch$}
 $endif$
+
 $if(has-frontmatter)$
 \mainmatter
 $endif$
+
+% Segment about Responsibilities Action
+$if(responsible)$
+\makeresponsibilities
+$endif$
+
+% Make Body
 $body$
+
+% Segment about Disiplinary Action
+$if(disiplinary)$
+\makedisiplinary
+$endif$
+
+
+$if(signee)$
+\par \vspace{2cm}
+
+$for(signee)$
+
+$if(signee.name)$
+$if(signee.title)$
+\noindent \nametitlesigdate{$signee.name$}{$signee.title$}
+$else$
+\noindent \namesigdate{$signee.name$}
+$endif$
+$else$
+\noindent \sigdate{}
+$endif$
+
+$sep$
+\hfill
+$endfor$
+
+$endif$
+
 
 $if(has-frontmatter)$
 \backmatter
 $endif$
+
 $if(natbib)$
 $if(bibliography)$
 $if(biblio-title)$
@@ -527,10 +661,10 @@ $if(beamer)$
 $else$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
 $endif$
-
 $endif$
+
 $for(include-after)$
 $include-after$
-
 $endfor$
+
 \end{document}
