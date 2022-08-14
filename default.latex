@@ -439,6 +439,7 @@ $if(logo)$
 $endif$
 $endif$
 
+\providecommand{\makeapproval}[0]{% add subtitle to \maketitle
 \begin{center}
 \textit{Approved by: $approval$} \par
 $if(date_approval)$ \textit{Approved date:  $date_approval$} \par $endif$
