@@ -448,21 +448,24 @@ $if(date_entry)$ \textit{Entry into force:  $date_entry$} \par $endif$
 }
 
 \providecommand{\makeresponsibilities}[0]{
-\hypertarget{responsibilities}{
-\section{Responsibilities}\label{responsibilities}}
+\par
+\hypertarget{responsibilities}{ \large Responsibilities \label{responsibilities}} \par
 
 \begin{itemize}
 \tightlist
 $for(responsible)$
-\item{$responsible.name$ is the $responsible.title$ with overall responsibility for $responsible.responsibility$}
+\item{$responsible.name$ is the $responsible.title$ with overall responsibility for $responsible.responsibility$}.
 $endfor$
+\par
 \end{itemize}
 
 $if(reviewfreq)$
+
 \par We will review this policy: $reviewfreq$
 $endif$
 
 $if(contact)$
+
 \par In the meantime, if you have any questions, suggestions or feedback, please contact: $contact$
 $endif$
 }
@@ -529,6 +532,7 @@ $endif$
 % ------------------------------
 % START OF DOCUMENT CONSTRUCTION
 % ------------------------------
+
 \begin{document}
 $if(has-frontmatter)$
 \frontmatter
